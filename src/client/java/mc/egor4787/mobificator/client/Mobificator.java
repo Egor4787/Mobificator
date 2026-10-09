@@ -8,7 +8,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.EntityHitResult;
 
 public class Mobificator implements ClientModInitializer {
@@ -60,8 +59,8 @@ public class Mobificator implements ClientModInitializer {
         LivingEntity target = client.player;
 
         if (client.hitResult instanceof EntityHitResult hit
-            && hit.getEntity() instanceof Mob mob) {
-            target = mob;
+            && hit.getEntity() instanceof LivingEntity entity) {
+            target = entity;
         }
 
         client.setScreenAndShow(new MobificatorInstant(client.gui.screen(), target));
