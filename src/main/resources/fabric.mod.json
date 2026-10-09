@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "mobificator",
+	"version": "${version}",
+	"name": "Mobificator",
+	"description": "Look at a mob. Control the mob.",
+	"authors": [
+		"Egor4787"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/mobificator",
+		"sources": "https://github.com/Egor4787/mobificator",
+		"issues": "https://github.com/Egor4787/mobificator/issues"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/mobificator/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["mc.egor4787.mobificator.client.Mobificator"],
+		"modmenu": ["mc.egor4787.mobificator.client.configuration.MobificatorModMenu"]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
