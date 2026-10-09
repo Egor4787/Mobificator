@@ -5,7 +5,9 @@ By [Egor4787](https://modrinth.com/user/egor4787/) • Minecraft 26.2
 <a href="https://github.com/Egor4787/Mobificator/releases/latest"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-github.png" height=56></a>
 
 ### Look at a mob. Control the mob.
-This mod allows you to quickly change attributes of a mob by just looking at it and pressing `i` for Instant mode and `m` for Lab mode.
+This mod allows you to quickly change attributes of a mob or a player by just looking at it and pressing `i` for Instant mode and `m` for Lab mode.
+
+Also works on self. To open self-control Instant mode, press the same `i` key while not looking at any other entity (mobs, players).
 
 In the Instant mode, use this syntax
 `<attribute> <value>` to set a value or `<attribute> reset` to reset it to the default value.
