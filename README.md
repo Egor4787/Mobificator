@@ -20,4 +20,5 @@ For example, if you type `max_health 10` and press enter, this will be converted
 
 See, you don't have to type the full command, and you can get the value immediately, without doing `/attribute <mob> max_health base get`.
 
-#### If you enjoy the mod, please follow it on Modrinth or give a star on GitHub. Contributions are always welcome too!
+#### P.S.
+If you enjoy the mod, please follow it on Modrinth or give a star on GitHub. Contributions are always welcome too!
