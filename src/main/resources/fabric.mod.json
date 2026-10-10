@@ -3,7 +3,7 @@
 	"id": "mobificator",
 	"version": "${version}",
 	"name": "Mobificator",
-	"description": "Look at a mob. Control the mob.",
+	"description": "This mod allows you to quickly control any living entities. Mobs, players, self",
 	"authors": [
 		"Egor4787"
 	],

@@ -4,7 +4,7 @@ By [Egor4787](https://modrinth.com/user/egor4787/) • Minecraft 26.2
 <a href="https://modrinth.com/mod/mobificator"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-modrinth.png" height=60></a>
 <a href="https://github.com/Egor4787/Mobificator/releases/latest"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-github.png" height=56></a>
 
-### Look at a mob. Control the mob.
+### Minecraft mod that allows you to quickly control any living entities. Mobs, players, self
 This mod allows you to quickly change attributes of a mob or a player by just looking at it and pressing `i` for Instant mode and `m` for Lab mode.
 
 Also works on self. To open self-control Instant mode, press the same `i` key while not looking at any other entity (mobs, players).
