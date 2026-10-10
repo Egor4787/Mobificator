@@ -48,9 +48,7 @@ public class Mobificator implements ClientModInitializer {
     }
 
 	private static void openMobificatorLab(Minecraft client) {
-		client.setScreenAndShow(new MobificatorLabScreen(
-                client.gui.screen()
-        ));
+		client.gui.setScreen(new MobificatorLabScreen(client.gui.screen()));
 	}
 
     private static void openMobificatorInstant(Minecraft client) {
