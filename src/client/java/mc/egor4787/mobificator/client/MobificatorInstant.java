@@ -8,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import org.jspecify.annotations.NonNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -65,15 +64,6 @@ public class MobificatorInstant extends Screen {
                 attributes.add(attribute);
             }
         }
-    }
-
-    @Override
-    public void extractBackground(
-            @NonNull GuiGraphicsExtractor graphics,
-            int mouseX,
-            int mouseY,
-            float delta
-    ) {
     }
 
     @Override
