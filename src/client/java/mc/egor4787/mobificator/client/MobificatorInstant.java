@@ -24,9 +24,10 @@ public class MobificatorInstant extends Screen {
 
     private final Screen parent;
     private final LivingEntity target;
-    private final List<AttributeInstance> attributes = new ArrayList<>();
-
     private EditBox input;
+
+    private final List<AttributeInstance> attributes = new ArrayList<>();
+    private int completionIndex = 0;
 
     public MobificatorInstant(Screen parent, LivingEntity target) {
         super(Component.literal("Mobificator Instant"));
@@ -140,6 +141,11 @@ public class MobificatorInstant extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
+        if (event.key() == GLFW.GLFW_KEY_TAB) {
+            complete();
+            return true;
+        }
+
         if (event.key() == GLFW.GLFW_KEY_ENTER
                 || event.key() == GLFW.GLFW_KEY_KP_ENTER) {
             execute();
@@ -147,6 +153,23 @@ public class MobificatorInstant extends Screen {
         }
 
         return super.keyPressed(event);
+    }
+
+    private void complete() {
+        String prefix = input.getValue().trim().toLowerCase();
+
+        if (prefix.isEmpty() || prefix.contains(" ")) return;
+
+        List<String> matches = attributes.stream()
+                .map(a -> a.getAttribute().getRegisteredName())
+                .map(name -> name.substring(name.indexOf(":") + 1))
+                .filter(name -> name.toLowerCase().startsWith(prefix))
+                .distinct()
+                .toList();
+
+        if (matches.isEmpty()) return;
+
+        input.setValue(matches.get(completionIndex++ % matches.size()));
     }
 
     private void execute() {
