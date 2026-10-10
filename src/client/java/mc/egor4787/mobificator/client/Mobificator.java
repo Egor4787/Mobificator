@@ -63,6 +63,6 @@ public class Mobificator implements ClientModInitializer {
             target = entity;
         }
 
-        client.setScreenAndShow(new MobificatorInstant(client.gui.screen(), target));
+        client.gui.setScreen(new MobificatorInstant(client.gui.screen(), target));
     }
 }
