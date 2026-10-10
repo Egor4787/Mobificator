@@ -27,6 +27,8 @@ public class MobificatorInstant extends Screen {
 
     private final List<AttributeInstance> attributes = new ArrayList<>();
     private int completionIndex = 0;
+    private static final List<String> history = new ArrayList<>();
+    private int historyIndex = -1;
 
     public MobificatorInstant(Screen parent, LivingEntity target) {
         super(Component.literal("Mobificator Instant"));
@@ -131,6 +133,23 @@ public class MobificatorInstant extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
+        if (event.key() == GLFW.GLFW_KEY_UP || event.key() == GLFW.GLFW_KEY_PAGE_UP) {
+            if (historyIndex < history.size() - 1) {
+                input.setValue(history.get(++historyIndex));
+            }
+            return true;
+        }
+
+        if (event.key() == GLFW.GLFW_KEY_DOWN || event.key() == GLFW.GLFW_KEY_PAGE_DOWN) {
+            if (historyIndex > 0) {
+                input.setValue(history.get(--historyIndex));
+            } else {
+                historyIndex = -1;
+                input.setValue("");
+            }
+            return true;
+        }
+
         if (event.key() == GLFW.GLFW_KEY_TAB) {
             complete();
             return true;
@@ -169,6 +188,9 @@ public class MobificatorInstant extends Screen {
 
         if (parts.length != 2) return;
 
+        history.addFirst(input.getValue());
+        historyIndex = -1;
+
         for (AttributeInstance attribute : attributes) {
             String name = attribute.getAttribute().getRegisteredName();
             String shortName = name.substring(name.indexOf(':') + 1);
@@ -196,8 +218,7 @@ public class MobificatorInstant extends Screen {
                 );
 
                 onClose();
-            } catch (NumberFormatException ignored) {
-            }
+            } catch (NumberFormatException ignored) {}
 
             return;
         }
