@@ -26,7 +26,11 @@ public class MobificatorInstant extends Screen {
     private EditBox input;
 
     private final List<AttributeInstance> attributes = new ArrayList<>();
+
+    private List<String> completionMatches = new ArrayList<>();
     private int completionIndex = 0;
+    private String completionPrefix = "";
+
     private static final List<String> history = new ArrayList<>();
     private int historyIndex = -1;
 
@@ -114,7 +118,7 @@ public class MobificatorInstant extends Screen {
             String shortName = name.substring(name.indexOf(':') + 1);
 
             if (!search.isEmpty() && !search.contains(" ")
-                && shortName.toLowerCase().contains(search)) {
+                && shortName.toLowerCase().startsWith(search)) {
                 int rowY = y + count * 16;
 
                 String content = shortName + " " + attribute.getBaseValue();
@@ -161,6 +165,9 @@ public class MobificatorInstant extends Screen {
             return true;
         }
 
+        completionMatches = List.of();
+        completionPrefix = "";
+
         return super.keyPressed(event);
     }
 
@@ -169,16 +176,21 @@ public class MobificatorInstant extends Screen {
 
         if (prefix.isEmpty() || prefix.contains(" ")) return;
 
-        List<String> matches = attributes.stream()
-                .map(a -> a.getAttribute().getRegisteredName())
-                .map(name -> name.substring(name.indexOf(":") + 1))
-                .filter(name -> name.toLowerCase().startsWith(prefix))
-                .distinct()
-                .toList();
+        if (completionMatches.isEmpty()) {
+            completionPrefix = prefix;
+            completionMatches = attributes.stream()
+                    .map(a -> a.getAttribute().getRegisteredName())
+                    .map(name -> name.substring(name.indexOf(":") + 1))
+                    .filter(name -> name.toLowerCase().startsWith(completionPrefix))
+                    .distinct()
+                    .toList();
+            completionIndex = -1;
+        }
 
-        if (matches.isEmpty()) return;
+        if (completionMatches.isEmpty()) return;
 
-        input.setValue(matches.get(completionIndex++ % matches.size()));
+        completionIndex = (completionIndex + 1) % completionMatches.size();
+        input.setValue(completionMatches.get(completionIndex));
     }
 
     private void execute() {
