@@ -12,9 +12,8 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MobificatorInstant extends Screen {
+public class InstantMode extends Screen {
 
     private static final int TOP = 12;
     private static final int PANEL_HEIGHT = 18;
@@ -34,7 +33,7 @@ public class MobificatorInstant extends Screen {
     private static final List<String> history = new ArrayList<>();
     private int historyIndex = -1;
 
-    public MobificatorInstant(Screen parent, LivingEntity target) {
+    public InstantMode(Screen parent, LivingEntity target) {
         super(Component.literal("Mobificator Instant"));
         this.parent = parent;
         this.target = target;
@@ -113,12 +112,12 @@ public class MobificatorInstant extends Screen {
         int y = input.getY() + input.getHeight() + 4;
         int count = 0;
 
-        for (AttributeInstance  attribute : attributes) {
+        for (AttributeInstance attribute : attributes) {
             String name = attribute.getAttribute().getRegisteredName();
             String shortName = name.substring(name.indexOf(':') + 1);
 
             if (!search.isEmpty() && !search.contains(" ")
-                && shortName.toLowerCase().startsWith(search)) {
+                    && shortName.toLowerCase().startsWith(search)) {
                 int rowY = y + count * 16;
 
                 String content = shortName + " " + attribute.getBaseValue();
@@ -161,7 +160,7 @@ public class MobificatorInstant extends Screen {
 
         if (event.key() == GLFW.GLFW_KEY_ENTER
                 || event.key() == GLFW.GLFW_KEY_KP_ENTER) {
-            execute();
+            handleInput();
             return true;
         }
 
@@ -193,47 +192,20 @@ public class MobificatorInstant extends Screen {
         input.setValue(completionMatches.get(completionIndex));
     }
 
-    private void execute() {
-        if (minecraft.getConnection() == null) return;
-
-        String[] parts = input.getValue().trim().split("\\s+");
+    private void handleInput() {
+        String[] parts = input.getValue().trim().split("\\s+", 2);
 
         if (parts.length != 2) return;
 
         history.addFirst(input.getValue());
         historyIndex = -1;
 
-        for (AttributeInstance attribute : attributes) {
-            String name = attribute.getAttribute().getRegisteredName();
-            String shortName = name.substring(name.indexOf(':') + 1);
-
-            if (!parts[0].equalsIgnoreCase(shortName)
-                    && !parts[0].equalsIgnoreCase(name)) {
-                continue;
-            }
-
-            String command = "attribute " + target.getUUID() + " " + name + " base ";
-
-            if (parts[1].equalsIgnoreCase("reset")) {
-                Objects.requireNonNull(minecraft.getConnection()).sendCommand(command + "reset");
-                onClose();
-                return;
-            }
-
-            try {
-                double value = Double.parseDouble(parts[1]);
-
-                if (!Double.isFinite(value) || minecraft.getConnection() == null) return;
-
-                minecraft.getConnection().sendCommand(
-                        command + "set " + value
-                );
-
-                onClose();
-            } catch (NumberFormatException ignored) {}
-
-            return;
+        if (parts[0].equals("name")) {
+            Names.execute(minecraft, target, parts[1]);
+        } else {
+            Attributes.execute(minecraft, target, attributes, parts[0], parts[1]);
         }
+        onClose();
     }
 
     @Override

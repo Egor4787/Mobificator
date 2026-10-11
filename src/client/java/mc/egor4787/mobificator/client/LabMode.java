@@ -4,10 +4,10 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class MobificatorLabScreen extends Screen {
+public class LabMode extends Screen {
     private final Screen parent;
 
-    public MobificatorLabScreen(Screen parent) {
+    public LabMode(Screen parent) {
         super(Component.literal("Mobificator Lab"));
 
         this.parent = parent;
