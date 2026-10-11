@@ -6,7 +6,7 @@ By [Egor4787](https://modrinth.com/user/egor4787/) • Minecraft 26.2
 
 ### Minecraft mod that allows you to quickly control any living entities. Mobs, players, self
 
-<img src="https://github.com/Egor4787/Mobificator/blob/dev/.github/assets/screenshots/banner.png?raw=true" height=250 alt="Mobificator Banner">
+<img src="https://github.com/Egor4787/Mobificator/blob/master/.github/assets/screenshots/banner.png?raw=true" height=250 alt="Mobificator Banner">
 
 This mod allows you to quickly change attributes of a mob or a player by just looking at it and pressing `i` for Instant mode and `m` for Lab mode.
 
