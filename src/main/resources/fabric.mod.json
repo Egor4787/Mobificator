@@ -3,7 +3,7 @@
 	"id": "mobificator",
 	"version": "${version}",
 	"name": "Mobificator",
-	"description": "This mod allows you to quickly control any living entities. Mobs, players, self",
+	"description": "Simplify the long commands. Do it faster!",
 	"authors": [
 		"Egor4787"
 	],
