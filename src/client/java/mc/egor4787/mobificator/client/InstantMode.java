@@ -4,10 +4,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -24,11 +22,7 @@ public class InstantMode extends Screen {
     private final LivingEntity target;
     private EditBox input;
 
-    private final List<AttributeInstance> attributes = new ArrayList<>();
-
-    private List<String> completionMatches = new ArrayList<>();
-    private int completionIndex = 0;
-    private String completionPrefix = "";
+    private final Attributes.Suggestions suggestions;
 
     private static final List<String> history = new ArrayList<>();
     private int historyIndex = -1;
@@ -37,6 +31,7 @@ public class InstantMode extends Screen {
         super(Component.literal("Mobificator Instant"));
         this.parent = parent;
         this.target = target;
+        this.suggestions = new Attributes.Suggestions(target);
     }
 
     @Override
@@ -59,16 +54,6 @@ public class InstantMode extends Screen {
 
         addRenderableWidget(input);
         setInitialFocus(input);
-
-        attributes.clear();
-
-        for (var holder : BuiltInRegistries.ATTRIBUTE.listElements().toList()) {
-            AttributeInstance attribute = target.getAttribute(holder);
-
-            if (attribute != null) {
-                attributes.add(attribute);
-            }
-        }
     }
 
     @Override
@@ -108,30 +93,7 @@ public class InstantMode extends Screen {
 
         super.extractRenderState(graphics, mouseX, mouseY, delta);
 
-        String search = input.getValue().trim().toLowerCase();
-        int y = input.getY() + input.getHeight() + 4;
-        int count = 0;
-
-        for (AttributeInstance attribute : attributes) {
-            String name = attribute.getAttribute().getRegisteredName();
-            String shortName = name.substring(name.indexOf(':') + 1);
-
-            if (!search.isEmpty() && !search.contains(" ")
-                    && shortName.toLowerCase().startsWith(search)) {
-                int rowY = y + count * 16;
-
-                String content = shortName + " " + attribute.getBaseValue();
-
-                graphics.text(this.font,
-                        content,
-                        input.getX() + (input.getWidth() - this.font.width(content)) / 2,
-                        rowY + 4,
-                        0xFFFffFFF,
-                        true
-                );
-                if (++count == 5) break;
-            }
-        }
+        suggestions.render(graphics, this.font, input);
     }
 
     @Override
@@ -154,7 +116,7 @@ public class InstantMode extends Screen {
         }
 
         if (event.key() == GLFW.GLFW_KEY_TAB) {
-            complete();
+            suggestions.complete(input);
             return true;
         }
 
@@ -164,32 +126,8 @@ public class InstantMode extends Screen {
             return true;
         }
 
-        completionMatches = List.of();
-        completionPrefix = "";
-
+        suggestions.resetCompletion();
         return super.keyPressed(event);
-    }
-
-    private void complete() {
-        String prefix = input.getValue().trim().toLowerCase();
-
-        if (prefix.isEmpty() || prefix.contains(" ")) return;
-
-        if (completionMatches.isEmpty()) {
-            completionPrefix = prefix;
-            completionMatches = attributes.stream()
-                    .map(a -> a.getAttribute().getRegisteredName())
-                    .map(name -> name.substring(name.indexOf(":") + 1))
-                    .filter(name -> name.toLowerCase().startsWith(completionPrefix))
-                    .distinct()
-                    .toList();
-            completionIndex = -1;
-        }
-
-        if (completionMatches.isEmpty()) return;
-
-        completionIndex = (completionIndex + 1) % completionMatches.size();
-        input.setValue(completionMatches.get(completionIndex));
     }
 
     private void handleInput() {
@@ -200,10 +138,10 @@ public class InstantMode extends Screen {
         history.addFirst(input.getValue());
         historyIndex = -1;
 
-        if (parts[0].equals("name")) {
+        if (parts[0].equalsIgnoreCase("name")) {
             Names.execute(minecraft, target, parts[1]);
         } else {
-            Attributes.execute(minecraft, target, attributes, parts[0], parts[1]);
+            Attributes.execute(minecraft, target, parts[0], parts[1]);
         }
         onClose();
     }
