@@ -48,7 +48,7 @@ public class Mobificator implements ClientModInitializer {
     }
 
 	private static void openMobificatorLab(Minecraft client) {
-		client.gui.setScreen(new MobificatorLabScreen(client.gui.screen()));
+		client.gui.setScreen(new LabMode(client.gui.screen()));
 	}
 
     private static void openMobificatorInstant(Minecraft client) {
@@ -61,6 +61,6 @@ public class Mobificator implements ClientModInitializer {
             target = entity;
         }
 
-        client.gui.setScreen(new MobificatorInstant(client.gui.screen(), target));
+        client.gui.setScreen(new InstantMode(client.gui.screen(), target));
     }
 }

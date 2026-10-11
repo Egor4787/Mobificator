@@ -17,7 +17,7 @@
 	"environment": "client",
 	"entrypoints": {
 		"client": ["mc.egor4787.mobificator.client.Mobificator"],
-		"modmenu": ["mc.egor4787.mobificator.client.configuration.MobificatorModMenu"]
+		"modmenu": ["mc.egor4787.mobificator.client.configuration.ModMenu"]
 	},
 	"depends": {
 		"fabricloader": ">=0.19.5",

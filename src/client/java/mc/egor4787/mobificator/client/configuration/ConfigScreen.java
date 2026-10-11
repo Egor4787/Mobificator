@@ -6,10 +6,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
-public class MobificatorConfigScreen extends Screen {
+public class ConfigScreen extends Screen {
     private final Screen parent;
 
-    public MobificatorConfigScreen(Screen parent) {
+    public ConfigScreen(Screen parent) {
         super(Component.literal("Mobificator"));
         this.parent = parent;
     }
