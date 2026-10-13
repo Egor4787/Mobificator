@@ -147,6 +147,13 @@ public class InstantMode extends Screen {
                 if (parts.length != 3) return;
                 if (!Attributes.execute(minecraft, target, parts[1], parts[2])) return;
             }
+            case "e", "effect" -> {
+                if (parts.length < 2) return;
+
+                String args = command.substring(parts[0].length()).trim();
+
+                if (!Effects.execute(minecraft, target, args)) return;
+            }
             case "n", "name" -> {
                 String name = command.substring(parts[0].length()).trim();
 
@@ -159,13 +166,6 @@ public class InstantMode extends Screen {
                 if (name.isBlank()) return;
 
                 if (!Names.execute(minecraft, target, name, alwaysVisible)) return;
-            }
-            case "e", "effect" -> {
-                if (parts.length < 2) return;
-
-                String args = command.substring(parts[0].length()).trim();
-
-                if (!Effects.execute(minecraft, target, args)) return;
             }
             default -> {
                 return;
