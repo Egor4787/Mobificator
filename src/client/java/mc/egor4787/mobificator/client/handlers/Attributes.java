@@ -1,4 +1,4 @@
-package mc.egor4787.mobificator.client;
+package mc.egor4787.mobificator.client.handlers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

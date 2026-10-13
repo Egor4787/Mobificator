@@ -1,5 +1,7 @@
-package mc.egor4787.mobificator.client;
+package mc.egor4787.mobificator.client.modes;
 
+import mc.egor4787.mobificator.client.handlers.Attributes;
+import mc.egor4787.mobificator.client.handlers.Names;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;

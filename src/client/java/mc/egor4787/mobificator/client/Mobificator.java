@@ -1,6 +1,8 @@
 package mc.egor4787.mobificator.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import mc.egor4787.mobificator.client.modes.InstantMode;
+import mc.egor4787.mobificator.client.modes.LabMode;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
