@@ -1,7 +1,9 @@
 package mc.egor4787.mobificator.client.modes;
 
 import mc.egor4787.mobificator.client.handlers.Attributes;
+import mc.egor4787.mobificator.client.handlers.Effects;
 import mc.egor4787.mobificator.client.handlers.Names;
+import mc.egor4787.mobificator.client.suggestions.Suggestions;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,6 +14,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class InstantMode extends Screen {
 
@@ -24,7 +27,7 @@ public class InstantMode extends Screen {
     private final LivingEntity target;
     private EditBox input;
 
-    private final Attributes.Suggestions suggestions;
+    private final Suggestions suggestions;
 
     private static final List<String> history = new ArrayList<>();
     private int historyIndex = -1;
@@ -33,7 +36,7 @@ public class InstantMode extends Screen {
         super(Component.literal("Mobificator Instant"));
         this.parent = parent;
         this.target = target;
-        this.suggestions = new Attributes.Suggestions(target);
+        this.suggestions = new Suggestions(target);
     }
 
     @Override
@@ -137,17 +140,36 @@ public class InstantMode extends Screen {
 
         if (command.isEmpty()) return;
 
-        if (command.regionMatches(true, 0, "name ", 0, 5)) {
-            String name = command.substring(5).trim();
-            boolean alwaysVisible = name.toLowerCase().endsWith(" alwaysvisible");
+        String[] parts = command.split("\\s+");
 
-            if (alwaysVisible) name = name.substring(0, name.length() - " alwaysVisible".length()).trim();
+        switch (parts[0].toLowerCase(Locale.ROOT)) {
+            case "a", "attribute" -> {
+                if (parts.length != 3) return;
+                if (!Attributes.execute(minecraft, target, parts[1], parts[2])) return;
+            }
+            case "n", "name" -> {
+                String name = command.substring(parts[0].length()).trim();
 
-            Names.execute(minecraft, target, name, alwaysVisible);
-        } else {
-            String[] parts = command.split("\\s+", 2);
-            if (parts.length != 2) return;
-            Attributes.execute(minecraft, target, parts[0], parts[1]);
+                boolean alwaysVisible = name.toLowerCase(Locale.ROOT).endsWith(" -v");
+
+                if (alwaysVisible) {
+                    name = name.substring(0, name.length() - " -v".length()).trim();
+                }
+
+                if (name.isBlank()) return;
+
+                if (!Names.execute(minecraft, target, name, alwaysVisible)) return;
+            }
+            case "e", "effect" -> {
+                if (parts.length < 2) return;
+
+                String args = command.substring(parts[0].length()).trim();
+
+                if (!Effects.execute(minecraft, target, args)) return;
+            }
+            default -> {
+                return;
+            }
         }
 
         history.addFirst(command);
