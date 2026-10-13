@@ -7,12 +7,19 @@ public class Names {
     public static void execute(
             Minecraft client,
             LivingEntity target,
-            String name
+            String name,
+            boolean alwaysVisible
     ) {
         if (client.getConnection() == null || name.isBlank()) return;
 
-        client.getConnection().sendCommand(
-                "execute as " + target.getUUID() + " run data merge entity @s {CustomName:'" + name + "'}"
-        );
+        String command = "execute as " + target.getUUID() + " run data merge entity @s {CustomName:'" + name + "'";
+
+        if (alwaysVisible) {
+            command += ",CustomNameVisible:1b";
+        }
+
+        command += "}";
+
+        client.getConnection().sendCommand(command);
     }
 }

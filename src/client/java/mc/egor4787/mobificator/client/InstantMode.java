@@ -131,18 +131,25 @@ public class InstantMode extends Screen {
     }
 
     private void handleInput() {
-        String[] parts = input.getValue().trim().split("\\s+", 2);
+        String command = input.getValue().trim();
 
-        if (parts.length != 2) return;
+        if (command.isEmpty()) return;
 
-        history.addFirst(input.getValue());
-        historyIndex = -1;
+        if (command.regionMatches(true, 0, "name ", 0, 5)) {
+            String name = command.substring(5).trim();
+            boolean alwaysVisible = name.toLowerCase().endsWith(" alwaysvisible");
 
-        if (parts[0].equalsIgnoreCase("name")) {
-            Names.execute(minecraft, target, parts[1]);
+            if (alwaysVisible) name = name.substring(0, name.length() - " alwaysVisible".length()).trim();
+
+            Names.execute(minecraft, target, name, alwaysVisible);
         } else {
+            String[] parts = command.split("\\s+", 2);
+            if (parts.length != 2) return;
             Attributes.execute(minecraft, target, parts[0], parts[1]);
         }
+
+        history.addFirst(command);
+        historyIndex = -1;
         onClose();
     }
 
