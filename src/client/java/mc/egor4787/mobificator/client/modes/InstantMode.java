@@ -3,6 +3,7 @@ package mc.egor4787.mobificator.client.modes;
 import mc.egor4787.mobificator.client.handlers.Attributes;
 import mc.egor4787.mobificator.client.handlers.Effects;
 import mc.egor4787.mobificator.client.handlers.Names;
+import mc.egor4787.mobificator.client.handlers.Time;
 import mc.egor4787.mobificator.client.suggestions.Suggestions;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
@@ -166,6 +167,9 @@ public class InstantMode extends Screen {
                 if (name.isBlank()) return;
 
                 if (!Names.execute(minecraft, target, name, alwaysVisible)) return;
+            }
+            case "t", "time" -> {
+                if (parts.length != 2 || !Time.execute(minecraft, parts[1])) return;
             }
             default -> {
                 return;

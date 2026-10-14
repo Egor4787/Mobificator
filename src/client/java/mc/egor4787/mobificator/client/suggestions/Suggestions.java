@@ -1,10 +1,12 @@
 package mc.egor4787.mobificator.client.suggestions;
 
 import mc.egor4787.mobificator.client.handlers.Attributes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
@@ -26,7 +28,8 @@ public final class Suggestions {
     private static final List<Command> COMMANDS = List.of(
             new Command("a", "attribute", "Work with attributes"),
             new Command("e", "effect", "Work with effects"),
-            new Command("n", "name", "Work with names")
+            new Command("n", "name", "Work with names"),
+            new Command("t", "time", "Work with time")
     );
 
     private final LivingEntity target;
@@ -111,6 +114,31 @@ public final class Suggestions {
                     .filter(name -> name.toLowerCase(Locale.ROOT).contains(search))
                     .map(name -> new Option(name, command + " " + name))
                     .toList();
+        }
+
+        if (command.equalsIgnoreCase("t") ||  command.equalsIgnoreCase("time")) {
+            var level = Minecraft.getInstance().level;
+            if (level == null) return List.of();
+
+            var clock = level.dimensionTypeRegistration().value().defaultClock();
+
+            return clock.map(worldClock -> {
+                List<Option> options = new ArrayList<>();
+
+                level.registryAccess().lookupOrThrow(Registries.TIMELINE).listElements()
+                        .filter(timeline -> timeline.value().clock().equals(worldClock))
+                        .forEach(timeline -> timeline.value().registerTimeMarkers((key, _) -> {
+                            String name = key.identifier().getPath();
+                            options.add(new Option(
+                                    name,
+                                    command + " " + name
+                            ));
+                        }));
+
+                return options.stream()
+                        .filter(option -> option.label().toLowerCase(Locale.ROOT).contains(search))
+                        .toList();
+            }).orElseGet(List::of);
         }
 
         return List.of();
