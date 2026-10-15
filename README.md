@@ -1,9 +1,4 @@
-# Mobificator
-By [Egor4787](https://modrinth.com/user/egor4787/) • Minecraft 26.2
-
-[**`CurseForge`**](https://curseforge.com/minecraft/mc-mods/mobificator/) • [**`GitHub`**](https://github.com/Egor4787/Mobificator/releases/latest/) • [**`Modrinth`**](https://modrinth.com/mod/mobificator/)
-
-### Simplify the long commands. Do it faster
+[**`CurseForge`**](https://curseforge.com/minecraft/mc-mods/mobificator/) • [**`GitHub`**](https://github.com/Egor4787/Mobificator/releases/latest/)
 
 <img src="https://github.com/Egor4787/Mobificator/blob/master/.github/assets/screenshots/banner.png?raw=true" height=250 alt="Mobificator Banner">
 
