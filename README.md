@@ -1,8 +1,9 @@
 # Mobificator
 By [Egor4787](https://modrinth.com/user/egor4787/) • Minecraft 26.2
 
-<a href="https://modrinth.com/mod/mobificator"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-modrinth.png" height=60></a>
+<a href="https://curseforge.com/minecraft/mc-mods/mobificator"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-curseforge.png" height=58></a>
 <a href="https://github.com/Egor4787/Mobificator/releases/latest"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-github.png" height=56></a>
+<a href="https://modrinth.com/mod/mobificator"><img src="https://raw.githubusercontent.com/jvqtil/md-badges/refs/heads/master/.github/assets/badge-modrinth.png" height=60></a>
 
 ### Simplify the long commands. Do it faster
 
