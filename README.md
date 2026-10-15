@@ -17,6 +17,7 @@ Syntax is very simple, even a toddler could get it.<br>
 - `e clear` to remove all effects
 - `n <name>` to rename a mob (players can't be renamed)
 - `n <name> -v` to make the name always visible
+- `t <time` to set time
 
 ### How does it work?
 After pressing enter key, what does it do?
