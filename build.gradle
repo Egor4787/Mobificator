@@ -5,8 +5,8 @@ plugins {
 
 repositories {
 	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
 	}
 }
 
@@ -30,7 +30,7 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	// Mod Menu
-	implementation "maven.modrinth:mOgUt4GM:iRo7AZXf"
+	implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
